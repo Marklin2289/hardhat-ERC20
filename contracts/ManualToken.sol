@@ -152,4 +152,21 @@ contract ManualToken {
         emit Burn(msg.sender, _value);
         return true;
     }
+
+    /**
+    Destroy tokens from other account
+    Remove `_value` tokens from the system irreversibly on behalf of `_from`.
+    *
+    @param _from The address of the sender
+    @param _vale The amount of money to burn
+     */
+    function burnFrom(address _from, uint256 _value) public returns (bool success) {
+        require(balanceOf[_from] >= _value); //check if the targeted balance is enough
+        require(_value <= allowance[_from][msg.sender]); //check allowance
+        balanceOf[_from] -= _value; //subtract from the targeted balance
+        allowance[_from][msg.sender] -= _value; //subtract from sender's allowance
+        totalSupply -= _value; //update totalSupply
+        emit Burn(_from, _value);
+        return true;
+    }
 }
