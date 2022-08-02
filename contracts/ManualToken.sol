@@ -41,7 +41,7 @@ contract ManualToken {
         string memory tokenSymbol
     ) {
         totalSupply = initialSupply * 10**uint256(decimals); //update total supply with the decimal amount
-        balanceIf[msg.sender] = totalSupply; // Give the creator all initial tokens
+        balanceOf[msg.sender] = totalSupply; // Give the creator all initial tokens
         name = tokenName; //set the name of display purposes
         symbol = tokenSymbol; //set the symbol for display purposes
     }
@@ -153,13 +153,12 @@ contract ManualToken {
         return true;
     }
 
-    /**
-    Destroy tokens from other account
-    Remove `_value` tokens from the system irreversibly on behalf of `_from`.
-    *
-    @param _from The address of the sender
-    @param _vale The amount of money to burn
-     */
+    // Destroy tokens from other account
+    // Remove `_value` tokens from the system irreversibly on behalf of `_from`.
+
+    // @param _from The address of the sender
+    // @param _vale The amount of money to burn
+
     function burnFrom(address _from, uint256 _value) public returns (bool success) {
         require(balanceOf[_from] >= _value); //check if the targeted balance is enough
         require(_value <= allowance[_from][msg.sender]); //check allowance
